@@ -9,6 +9,7 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from django.conf import settings
 from django_countries.fields import CountryField
+from django.db.models import Q
 
 CATEGORY = [
     ('shirt', 'shirt'),
@@ -22,6 +23,14 @@ LABEL = [
 ]
 
 
+class ItemManager(models.Manager):
+    
+    def search(self, query=None):
+        if query is None or query=="":
+            return self.get_queryset().none()
+        lookups = Q(title__icontains=query) | Q(description__icontains=query) | Q(info__icontains=query)
+        return self.get_queryset().filter(lookups)
+
 class Item(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
@@ -32,6 +41,7 @@ class Item(models.Model):
     category = models.CharField(choices=CATEGORY, max_length=8)
     label = models.CharField(choices=LABEL, max_length=7, blank=True, null=True)
 
+    objects = ItemManager()
     def __str__(self):
         return self.title
 

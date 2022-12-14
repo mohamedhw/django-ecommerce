@@ -199,14 +199,11 @@ def remove_one_item_from_cart(request, pk):
 
 
 def search_item(request):
-    if request.method == "POST":
-        searched = request.POST['searched']
-        items = Item.objects.filter(title__contains=searched)
-        context = {
-            "items": items,
-            "searched": searched
-        }
+    
+    query = request.GET.get("q")
+    qs = Item.objects.search(query=query)
+    context = {
+        "qs": qs
+    }
 
-        return render(request, 'search.html', context)
-    else:
-        return render(request, "search.html", {})
+    return render(request, 'search.html', context)

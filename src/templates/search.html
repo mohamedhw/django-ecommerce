@@ -2,17 +2,17 @@
 
 
 {% block content %}
-    {% if searched %}
+    {% if qs %}
         <main>
             <div class="container">
                 <!--Section: Products v.3-->
                 <section class="text-center mb-4">
-                    <h1 class="pt-5 mt-5 ml-5"><b>{{ items.count }}</b> results for "{{ searched }}"</h1>
+                    <h1 class="pt-5 mt-5 ml-5"><b>{{ qs.count }}</b> results"</h1>
                     <br/>
                     <!--Grid row-->
                     <div class="row wow fadeIn">
 
-                        {% for instance in items %}
+                        {% for instance in qs %}
                             <div class="col-lg-3 col-md-6 mb-4">
                                 <!--Card-->
                                 <div class="card">
