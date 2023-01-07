@@ -37,9 +37,12 @@ class Item(models.Model):
     info = models.TextField(null=True, blank= True)
     price = models.FloatField()
     discount_price = models.FloatField(blank=True, null=True)
-    image = models.ImageField(default="default.png", upload_to='item_pic')
+    image = models.ImageField(default="default.jpg", upload_to='item_pic')
     category = models.CharField(choices=CATEGORY, max_length=8)
     label = models.CharField(choices=LABEL, max_length=7, blank=True, null=True)
+    image_2 = models.ImageField(default="default.jpg", null=True, blank=True, upload_to="item_pic") 
+    image_3 = models.ImageField(default="default.jpg", null=True, blank=True, upload_to="item_pic") 
+    image_4 = models.ImageField(default="default.jpg", null=True, blank=True, upload_to="item_pic") 
 
     objects = ItemManager()
     def __str__(self):

@@ -29,7 +29,13 @@
         <!-- Right -->
         <ul class="navbar-nav nav-flex-icons">
           {% if request.user.is_authenticated %}
-          <li class="nav-item">
+          <li class="nav-item mr-3">
+            {% csrf_token %}
+            <a href="{% url 'users:profile' %}">
+              <button type="submit" class="nav-link waves-effect" style="background: none; border:none"><span>Profile</span></button>
+            </a>
+          </li>
+          <li class="nav-item mr-3">
             <a class="nav-link waves-effect" href="{% url 'store:order' %}">
               <span class="badge red z-depth-1 mr-1"></span>
               <i class="fas fa-shopping-cart"></i>
