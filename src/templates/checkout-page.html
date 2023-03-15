@@ -23,7 +23,7 @@
               <button type="submit" class="btn btn-primary">post</button>
             </form> -->
             <!--Card content-->
-            <form class="card-body" method="POST">
+            <form class="card-body" method="POST" id="handelpayment">
               {% csrf_token %}
               <!--address-->
               <div class="md-form mb-5">
@@ -105,7 +105,7 @@
               </div>
 
               <hr class="mb-4">
-              <button class="btn btn-primary btn-lg btn-block" type="submit">Continue to checkout</button>
+              <button class="btn btn-primary btn-lg btn-block" id="submitBtn">Continue to checkout!</button>
 
             </form>
 
@@ -144,7 +144,7 @@
               <input type="text" class="form-control" placeholder="Promo code" aria-label="Recipient's username"
                 aria-describedby="basic-addon2">
               <div class="input-group-append">
-                <button class="btn btn-secondary btn-md waves-effect m-0" type="button">Redeem</button>
+                <button class="btn btn-secondary btn-md waves-effect m-0" type="submit">Redeem</button>
               </div>
             </div>
           </form>

@@ -10,6 +10,59 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .filters import ItemFilter
 from django.contrib import messages
 from .forms import CheckoutForm
+import stripe
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from django.conf import settings # new
+from django.http.response import JsonResponse # new
+from django.views.decorators.csrf import csrf_exempt # new
+
+
+@csrf_exempt
+def stripe_config(request):
+    if request.method == 'GET':
+        stripe_config = {'publicKey': settings.STRIPE_PUBLISHABLE_KEY}
+        return JsonResponse(stripe_config, safe=False)
+
+
+
+def payment_success(request):
+    return render(request, "success.html")
+
+def payment_cancel(request):
+    return render(request, "cancel.html")
+
+@csrf_exempt
+def create_checkout_session(request):
+
+    domain_url = 'http://localhost:8000'
+    stripe.api_key = settings.STRIPE_SECRET_KEY
+    user = request.user
+    order = Order.objects.get(user=user)
+    total = order.get_total()
+    try:
+        checkout_session = stripe.checkout.Session.create(
+
+            success_url="http://localhost:8000/success/",
+            
+            mode='payment',
+            line_items=[{
+                'price_data': {
+                    'currency': 'usd',
+                    'unit_amount': total*100,
+                    'product_data': {
+                        'name': 'Cart Total',
+                        'description': 'the total of the item in your cart',
+                        # 'images': ['https://example.com/t-shirt.png'],
+                        },
+                },
+                'quantity': 1,
+            }],
+            # cancel_url=YOUR_DOMAIN + '/cancel/'
+        )
+        return JsonResponse({'sessionId': checkout_session['id']})
+    except Exception as e:
+        return JsonResponse({'error': str(e)})
 
 
 class Home(ListView):
@@ -73,8 +126,7 @@ class CheckoutView(View):
                 zip = form.cleaned_data.get('zip')
                 # same_shipping_address = form.cleaned_data.get('same_shipping_address')
                 # save_info = form.cleaned_data.get('save_info')
-                payment_option = form.cleaned_data.get('payment_option')
-
+                # payment_option = form.cleaned_data.get('payment_option')
                 billing_address = BillingAddress(
                 user = self.request.user,
                 address = address,
@@ -84,14 +136,13 @@ class CheckoutView(View):
                 )
                 billing_address.save()
                 order.billing_address=billing_address
-                order.save(
-                )
+                order.save()
                 return redirect("store:home")
         except ObjectDoesNotExist:
             messages.warning(self.request, "You do not have an order !")
             return redirect("store:home")
 
-        return redirect("store:checkout")
+        # return redirect("store:checkout")
         
 def payment_view(request):
     order = Order.objects.get(user=request.user, ordered=False)

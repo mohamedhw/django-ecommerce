@@ -12,3 +12,10 @@
     transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
 }
 
+.footer--body
+ {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}

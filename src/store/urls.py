@@ -12,7 +12,11 @@ from .views import (
     search_item,
     OrderView,
     remove_one_item_from_cart,
-    payment_view
+    payment_view,
+    stripe_config,
+    create_checkout_session,
+    payment_success,
+    payment_cancel
 )
 
 
@@ -21,7 +25,6 @@ app_name="store"
 urlpatterns = [
     path('', Home.as_view(), name="home"),
     path('<int:pk>/', detail_view, name="detail"),
-    path('cart/', CheckoutView.as_view(), name='checkout'),
     path('<int:pk>/add_to_cart/', add_to_cart, name='add_to_cart'),
     path('<int:pk>/rm-item/', remove_from_cart, name="remove_item"),
     path('shirt/', ShirtView.as_view(), name='shirt'),
@@ -30,11 +33,14 @@ urlpatterns = [
     path('search/', search_item, name="search"),
     path('order/', OrderView.as_view(), name="order"),
     path('<int:pk>/remove-one', remove_one_item_from_cart, name="remove_one_item"),
-    path('payment/', payment_view, name="payment"),
+    path('cart/', CheckoutView.as_view(), name='checkout'),
 
+    path('config/', stripe_config),
+    path('create-checkout-session/', create_checkout_session), # new
+    path('success/', payment_success),
+    path('cancel/', payment_cancel),
 
     # api urls
-
     path('<int:pk>/item-detail-api/', item_detail_api, name="item_detail_api"),
     path("item-list-api/", ApiItemList.as_view(), name="item_list_api")
 ]
