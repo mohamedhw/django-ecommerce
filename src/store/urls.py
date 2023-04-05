@@ -16,7 +16,9 @@ from .views import (
     stripe_config,
     create_checkout_session,
     payment_success,
-    payment_cancel
+    payment_cancel,
+    save_button,
+    saved_posts
 )
 
 
@@ -34,6 +36,8 @@ urlpatterns = [
     path('order/', OrderView.as_view(), name="order"),
     path('<int:pk>/remove-one', remove_one_item_from_cart, name="remove_one_item"),
     path('cart/', CheckoutView.as_view(), name='checkout'),
+    path('wish/<int:pk>/', save_button, name='save' ),
+    path('wishl/', saved_posts, name='wishlist'),
 
     path('config/', stripe_config),
     path('create-checkout-session/', create_checkout_session), # new

@@ -27,7 +27,11 @@ def stripe_config(request):
 
 
 def payment_success(request):
-    return render(request, "success.html")
+    order = Order.objects.get(user=request.user, ordered = False)
+    order.ordered = True
+    order.save()
+    print(order.ordered)
+    return redirect("store:home")
 
 def payment_cancel(request):
     return render(request, "cancel.html")
@@ -43,7 +47,7 @@ def create_checkout_session(request):
     try:
         checkout_session = stripe.checkout.Session.create(
 
-            success_url="http://localhost:8000/success/",
+            success_url= 'http://localhost:8000/success/',
             
             mode='payment',
             line_items=[{
@@ -69,6 +73,28 @@ class Home(ListView):
     model = Item
     paginate_by = 8
     template_name = "home-page.html"
+
+
+@login_required
+def saved_posts(request):
+    user = request.user
+    posts = user.wish.all()
+    context = {
+        'posts': posts,
+    }
+    return render(request, "saved_posts.html", context)
+
+
+@login_required
+def save_button(request, pk):
+    if request.POST.get('action') == 'post':
+        data = {}
+        post = Item.objects.get(pk=pk)
+        if request.user in post.wish.all():
+            post.wish.remove(request.user)
+        else:
+            post.wish.add(request.user)
+    return JsonResponse({'data': data})
 
 
 class ShirtView(ListView):
@@ -99,22 +125,25 @@ class OutWearView(ListView):
     
 
 def detail_view(request, pk):
+    user = request.user
     item = Item.objects.get(pk=pk)
+    post = ""
+    if user.is_authenticated:
+        posts = user.wish.all()
+        post = item in posts
     context = {
         'item': item,
+        'post': post
     }
     return render(request, "product-page.html", context)
 
-class CheckoutView(View):
-
+class CheckoutView(View, LoginRequiredMixin):
     def get(self, *args, **kwargs):
         form = CheckoutForm()
         context = {
             "form": form,
         }
-
         return render(self.request, 'checkout-page.html', context)
-
     def post(self, *args, **kwargs):
         form = CheckoutForm(self.request.POST or None)
         try:
@@ -165,6 +194,7 @@ class OrderView(LoginRequiredMixin, View):
         except ObjectDoesNotExist:
             messages.warning(self.request, "You do not have an order !")
             return redirect("store:home")
+
 @login_required
 def add_to_cart(request, pk):
     item = get_object_or_404(Item, pk=pk)

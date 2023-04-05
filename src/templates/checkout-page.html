@@ -101,13 +101,13 @@
                   <input id="paypal" name="paymentMethod" type="radio" class="custom-control-input" required>
                   <label class="custom-control-label" for="paypal">Paypal</label>
                 </div> -->
-                {{ form.payment_option }}
+                {% comment %} {{ form.payment_option }} {% endcomment %}
               </div>
 
               <hr class="mb-4">
               <button class="btn btn-primary btn-lg btn-block" id="submitBtn">Continue to checkout!</button>
-
             </form>
+            {% comment %} <button class="btn btn-primary btn-lg btn-block" id="submitBtn">Continue</button> {% endcomment %}
 
           </div>
           <!--/.Card-->

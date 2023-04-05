@@ -43,11 +43,13 @@ INSTALLED_APPS = [
     'django_countries',
     "crispy_bootstrap5",
     'rest_framework',
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -156,6 +158,7 @@ LOGIN_URL = 'users:login'
 CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 
+CORS_ORIGIN_ALLOW_ALL = True
 
 STRIPE_SECRET_KEY = "sk_test_51M2CszHfDCeyo2OPrMjRZtzrEMKnEJGK7WqGEeMkp1j6Kh04Gh8LS3mdeydSV6DR1LXui46zs5XMgGdbQk98oqdu005PNRAWUb"
 STRIPE_PUBLISHABLE_KEY = "pk_test_51M2CszHfDCeyo2OPWBxZCmTFc3TyWUahgGeZtON6ZvWCVK9gRYiwCeUmuwcOJfgOtpoc68olWA8xPN9xU8TxjlQl00fZsY2vyD"

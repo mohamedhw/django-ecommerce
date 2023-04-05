@@ -2,13 +2,15 @@ console.log("test-test")
 
 // new
 // Get Stripe publishable key
+
 fetch("http://localhost:8000/config/")
-.then((result) => { return result.json(); })
+.then((result) => {return result.json(); })
 .then((data) => {
-    // console.log(data.publicKey)
+    console.log(data.publicKey)
   // Initialize Stripe.js
   const stripe = Stripe(data.publicKey);
   console.log(stripe)
+
     // new
 //   // Event handler
   document.querySelector("#submitBtn").addEventListener("click", (e) => {
@@ -22,8 +24,8 @@ fetch("http://localhost:8000/config/")
         // Redirect to Stripe Checkout
         return stripe.redirectToCheckout({sessionId: data.sessionId})
     })
-//     .then((res) => {
-//       console.log(res);
-//     });
+    // .then(() => {
+    //   return e
+    // });
   });
 });

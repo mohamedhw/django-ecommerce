@@ -38,11 +38,12 @@ class Item(models.Model):
     price = models.IntegerField(default=0)
     discount_price = models.IntegerField(blank=True, null=True)
     image = models.ImageField(default="default.jpg", upload_to='item_pic')
-    category = models.CharField(choices=CATEGORY, max_length=8)
+    category = models.CharField(choices=CATEGORY, max_length=10)
     label = models.CharField(choices=LABEL, max_length=7, blank=True, null=True)
     image_2 = models.ImageField(default="default.jpg", null=True, blank=True, upload_to="item_pic") 
     image_3 = models.ImageField(default="default.jpg", null=True, blank=True, upload_to="item_pic") 
     image_4 = models.ImageField(default="default.jpg", null=True, blank=True, upload_to="item_pic") 
+    wish = models.ManyToManyField(User, blank=True, related_name="wish")
 
     objects = ItemManager()
     def __str__(self):
@@ -53,9 +54,6 @@ class Item(models.Model):
 
     def get_shirt(self):
         return reverse("store:shirt")
-
-
-
 
 
 class OrderItem(models.Model):

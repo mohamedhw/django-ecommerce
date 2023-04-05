@@ -17,9 +17,11 @@
         <link href="{% static 'css/style.min.css' %}" rel="stylesheet">
         <link href="{% static 'css/css1.css' %}" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+        {% comment %} <script src="{% static 'jquery-3.6.0.min.js' %}"></script> {% endcomment %}
         <script src="https://js.stripe.com/v3/"></script>  <!-- new -->
         <script src="{% static 'js/main2.js' %}"></script>   <!-- new -->
         <script defer src="https://use.fontawesome.com/releases/v5.15.4/js/all.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     </head>
 
     <body>
@@ -42,8 +44,6 @@
         
 
         <!-- SCRIPTS -->
-        <!-- JQuery -->
-        <script type="text/javascript" src="{%static 'js/jquery-3.4.1.min.js'%}"></script>
         <!-- Bootstrap tooltips -->
         <script type="text/javascript" src="{% static 'js/popper.min.js'%}"></script>
         <!-- Bootstrap core JavaScript -->
