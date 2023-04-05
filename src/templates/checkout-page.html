@@ -126,14 +126,16 @@
 
           <!-- Cart -->
           <ul class="list-group mb-3 z-depth-1">
-            <li class="list-group-item d-flex justify-content-between lh-condensed">
-              <div>
-                <h6 class="my-0"></h6>
-                <small class="text-muted"></small>
-              </div>
-                <span class="text-muted">$</span>
-                <span class="text-muted">$</span>
-            </li>
+
+              <li class="list-group-item d-flex justify-content-between lh-condensed">
+                <div>
+                  <h6 class="my-0">Total</h6>
+                  {% for order_item in object.items.all %}
+                    <small style="display: block" class="m-1 text-muted">{{ order_item.item.title }}</small>
+                    {% endfor %}
+                  </div>
+                  <span class="text-muted">${{ object.get_total }}</span>
+              </li>
           </ul>
           <!-- Cart -->
 

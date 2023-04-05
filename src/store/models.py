@@ -85,7 +85,7 @@ class Order(models.Model):
     billing_address = models.ForeignKey("BillingAddress", on_delete=models.SET_NULL, blank=True, null=True)
 
     def __str__(self):
-        return self.user.username
+        return self.id
 
     def get_total(self):
         total = 0

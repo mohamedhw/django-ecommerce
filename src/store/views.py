@@ -28,9 +28,12 @@ def stripe_config(request):
 
 def payment_success(request):
     order = Order.objects.get(user=request.user, ordered = False)
+    for order_item in order.items.all():
+        order_item.ordered = True
+        order_item.save()
     order.ordered = True
     order.save()
-    print(order.ordered)
+
     return redirect("store:home")
 
 def payment_cancel(request):
@@ -42,7 +45,7 @@ def create_checkout_session(request):
     domain_url = 'http://localhost:8000'
     stripe.api_key = settings.STRIPE_SECRET_KEY
     user = request.user
-    order = Order.objects.get(user=user)
+    order = Order.objects.get(user=user, ordered=False)
     total = order.get_total()
     try:
         checkout_session = stripe.checkout.Session.create(
@@ -138,12 +141,17 @@ def detail_view(request, pk):
     return render(request, "product-page.html", context)
 
 class CheckoutView(View, LoginRequiredMixin):
-    def get(self, *args, **kwargs):
-        form = CheckoutForm()
-        context = {
-            "form": form,
-        }
-        return render(self.request, 'checkout-page.html', context)
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            order = Order.objects.get(user=request.user, ordered=False)
+            form = CheckoutForm()
+            context = {
+                "form": form,
+                "object": order,
+            }
+            return render(self.request, 'checkout-page.html', context)
+        else:
+            return redirect("users:login")
     def post(self, *args, **kwargs):
         form = CheckoutForm(self.request.POST or None)
         try:
