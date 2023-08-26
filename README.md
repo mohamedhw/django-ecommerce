@@ -18,7 +18,7 @@ create python venv
 activate the venv
 
 git clone "https://github.com/mohamedhw/django-e.git"
-pip install requirements.txt
+pip install -r requirements.txt
 cd src
 python manage.py makemigrations
 python manage.py migrate
