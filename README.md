@@ -1,3 +1,18 @@
+# django-e
+django e-commerce  website
+
+# django-e
+django e-commerce  website
+
+#### The technology used in the project:
+
+    -Django.
+    -stripe to handel the payment.
+    -Bootstrap to handel the style and make the website responsive.
+    -mysql database.
+    -crispy_forms for the forms style.
+
+
 ### how to make it work
 
 ##### create python venv
