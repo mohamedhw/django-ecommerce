@@ -1,26 +1,31 @@
-# django-e
-django e-commerce  website
+### how to make it work
 
-# django-e
-django e-commerce  website
+#### create python venv
 
-The technology used in the project:
+    python -m venv venv
 
-1-Django.
-2-Bootstrap to handel the style and make the website responsive.
-3-Pillow Library to handel the images.
-4-mysql database.
-5-crispy_forms for the forms style.
-6-stripe to handel the payment.
+#### activate the venv
 
+##### on Linux & Mac
+    
+    source venv/bin/activate
 
+##### on Windows    
+    
+    source venv/Scripts/activate
 
-create python venv
-activate the venv
+#### clone the Repositories
 
-git clone "https://github.com/mohamedhw/django-e.git"
-pip install -r requirements.txt
-cd src
-python manage.py makemigrations
-python manage.py migrate
-python manage.py runserver
+    git clone "https://github.com/mohamedhw/django-e.git"
+
+#### install the requirements
+
+    pip install -r requirements.txt
+
+#### run the local server
+
+    cd src
+    python manage.py makemigrations
+    python manage.py migrate
+    python manage.py runserver
+
