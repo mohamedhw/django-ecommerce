@@ -5,6 +5,7 @@ django e-commerce  website
 django e-commerce  website
 
 The technology used in the project:
+
 1-Django.
 2-Bootstrap to handel the style and make the website responsive.
 3-Pillow Library to handel the images.
