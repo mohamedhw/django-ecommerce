@@ -1,7 +1,7 @@
-# django-e
+# django-ecommerce
 django e-commerce  website
 
-# django-e
+# django-ecommerce
 django e-commerce  website
 
 #### The technology used in the project:
